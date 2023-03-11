@@ -21,6 +21,9 @@ export function dirsMergeSync(
 			if (fs.existsSync(destinationEntryPath)) {
 				switch (conflictResolver) {
 					case 'overwrite': {
+						fs.mkdirSync(path.dirname(destinationEntryPath), {
+							recursive: true,
+						})
 						fs.copyFileSync(sourceEntryPath, destinationEntryPath)
 						break
 					}
@@ -36,6 +39,9 @@ export function dirsMergeSync(
 					}
 				}
 			} else {
+				fs.mkdirSync(path.dirname(destinationEntryPath), {
+					recursive: true,
+				})
 				fs.copyFileSync(sourceEntryPath, destinationEntryPath)
 			}
 		}
@@ -63,6 +69,9 @@ export async function dirsMerge(
 				if (fs.existsSync(destinationEntryPath)) {
 					switch (conflictResolver) {
 						case 'overwrite': {
+							await fs.promises.mkdir(path.dirname(destinationEntryPath), {
+								recursive: true,
+							})
 							await fs.promises.copyFile(sourceEntryPath, destinationEntryPath)
 							break
 						}
@@ -78,6 +87,9 @@ export async function dirsMerge(
 						}
 					}
 				} else {
+					await fs.promises.mkdir(path.dirname(destinationEntryPath), {
+						recursive: true,
+					})
 					await fs.promises.copyFile(sourceEntryPath, destinationEntryPath)
 				}
 			}
